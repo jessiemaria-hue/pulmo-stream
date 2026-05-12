@@ -5,7 +5,6 @@ import base64
 import os
 import time
 import io
-from textwrap import dedent
 
 # =========================
 # 1. PAGE CONFIG & STATE
@@ -346,32 +345,34 @@ with col_a:
     """, unsafe_allow_html=True)
 
 with col_b:
-    st.markdown(dedent("""
-    <div class="glass-card">
-        <div class="section-label">02. THE CHALLENGE</div>
-        <h3 class="card-title">Why PE?</h3>
+    challenge_html = (
+        '<div class="glass-card">'
+            '<div class="section-label">02. THE CHALLENGE</div>'
+            '<h3 class="card-title">Why PE?</h3>'
 
-        <p class="body-text">
-            Pulmonary embolism happens when a blood clot blocks blood flow in the lungs.
-            It is dangerous because small clots can be difficult to detect on CTPA scans.
-        </p>
+            '<p class="body-text">'
+                'Pulmonary embolism happens when a blood clot blocks blood flow in the lungs. '
+                'It is dangerous because small clots can be difficult to detect on CTPA scans.'
+            '</p>'
 
-        <div class="body-text" style="margin-top: 18px;">
-            <b style="color: #A8D5D5;">Key Points</b>
-            <ul style="padding-left: 20px; margin-top: 8px;">
-                <li>High-risk and time-sensitive condition</li>
-                <li>Small clots can be easily missed</li>
-                <li>Radiologists review hundreds of scan slices</li>
-                <li>Delayed detection can delay treatment</li>
-            </ul>
-        </div>
+            '<div class="body-text" style="margin-top:18px;">'
+                '<b style="color:#A8D5D5;">Key Points</b>'
+                '<ul style="padding-left:20px; margin-top:8px;">'
+                    '<li>High-risk and time-sensitive condition</li>'
+                    '<li>Small clots can be easily missed</li>'
+                    '<li>Radiologists review hundreds of scan slices</li>'
+                    '<li>Delayed detection can delay treatment</li>'
+                '</ul>'
+            '</div>'
 
-        <p class="body-text" style="margin-top: 18px;">
-            <b style="color: #A8D5D5;">Neuronix AI Support</b><br>
-            Neuronix AI helps detect suspicious PE areas on CTPA scans, making the review process faster, clearer, and more consistent.
-        </p>
-    </div>
-    """), unsafe_allow_html=True)
+            '<p class="body-text" style="margin-top:18px;">'
+                '<b style="color:#A8D5D5;">Neuronix AI Support</b><br>'
+                'Neuronix AI helps detect suspicious PE areas on CTPA scans, '
+                'making the review process faster, clearer, and more consistent.'
+            '</p>'
+        '</div>'
+    )
+    st.markdown(challenge_html, unsafe_allow_html=True)
 
 with col_c:
     st.markdown("""
