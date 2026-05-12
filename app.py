@@ -205,7 +205,7 @@ st.markdown("""
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 24px;
-        padding: 2.5rem;
+        padding: 2rem;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         height: 100%;
         position: relative;
@@ -244,7 +244,7 @@ st.markdown("""
         border-color: rgba(168, 213, 213, 0.3);
     }
     .metric-value {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 700;
         color: #A8D5D5;
         line-height: 1;
@@ -368,14 +368,16 @@ with col_c:
     st.markdown("""
     <div class="glass-card">
         <div class="section-label">03. THE BENCHMARK</div>
-        <h3 class="card-title" style="margin-bottom: 0;">Performance</h3>
-        <div class="metric-container">
-            <div class="metric-item">
-                <div class="metric-value">95.8<span style="font-size: 1.5rem;">%</span></div>
+        <h3 class="card-title" style="margin-bottom: 1.5rem;">Performance</h3>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="metric-item" style="width: 100%;">
+                <div class="metric-value">95.8<span style="font-size: 1.4rem;">%</span></div>
                 <div class="metric-label">Sensitivity</div>
             </div>
-            <div class="metric-item">
-                <div class="metric-value">98.2<span style="font-size: 1.5rem;">%</span></div>
+
+            <div class="metric-item" style="width: 100%;">
+                <div class="metric-value">98.2<span style="font-size: 1.4rem;">%</span></div>
                 <div class="metric-label">Specificity</div>
             </div>
         </div>
