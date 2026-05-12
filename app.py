@@ -44,7 +44,7 @@ except Exception as e:
 # =========================
 # 2. ASSETS & HELPERS
 # =========================
-CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/f_mp4,vc_h264,q_auto:low,w_1280/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4"
+CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/f_mp4,vc_h264,q_auto:low,w_1280/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4?v=3"
 
 def get_image_base64(path: str) -> str:
     if os.path.exists(path):
@@ -158,7 +158,6 @@ st.markdown("""
         z-index: 0;
         filter: contrast(1.1) brightness(1.15);
         pointer-events: none;
-
     }
 
     .hero-overlay {
@@ -324,32 +323,28 @@ st.markdown("""
 # =========================
 # 4. FULL-WIDTH HERO SECTION
 # =========================
-st.markdown(f"""
-<div class="hero-container">
-    <video 
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        disablepictureinpicture
-        controlslist="nodownload nofullscreen noremoteplayback"
-    >
-        <source src="{CLOUDINARY_VIDEO_URL}" type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
-    <div class="hero-content animate-up">
-        <div class="section-label" style="display: flex; justify-content: center; letter-spacing: 0.5em; margin-bottom: 1.5rem;">Automated Neural Diagnostic</div>
-        <h1 class="hero-title">AI Segmentation<br><span class="hero-italic">Pulmonary Embolism</span></h1>
-        <p class="body-text" style="max-width: 600px; margin: 1.5rem auto 0 auto;">
-            High-precision segmentation using YOLOv11-large architecture for emboli localization and AI-assisted clinical interpretation.
-        </p>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+hero_html = (
+    '<div class="hero-container">'
+        '<video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">'
+            f'<source src="{CLOUDINARY_VIDEO_URL}" type="video/mp4">'
+        '</video>'
+        '<div class="hero-overlay"></div>'
+        '<div class="hero-content animate-up">'
+            '<div class="section-label" style="display:flex; justify-content:center; letter-spacing:0.5em; margin-bottom:1.5rem;">'
+                'Automated Neural Diagnostic'
+            '</div>'
+            '<h1 class="hero-title">'
+                'AI Segmentation<br>'
+                '<span class="hero-italic">Pulmonary Embolism</span>'
+            '</h1>'
+            '<p class="body-text" style="max-width:600px; margin:1.5rem auto 0 auto;">'
+                'High-precision segmentation using YOLOv11-large architecture for emboli localization and AI-assisted clinical interpretation.'
+            '</p>'
+        '</div>'
+    '</div>'
+)
 
-st.markdown('<div style="padding: 0 1rem;">', unsafe_allow_html=True)
+st.markdown(hero_html, unsafe_allow_html=True)
 
 # =========================
 # 5. EDUCATION SECTION
