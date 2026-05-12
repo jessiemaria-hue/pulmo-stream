@@ -44,7 +44,7 @@ except Exception as e:
 # =========================
 # 2. ASSETS & HELPERS
 # =========================
-CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4"
+CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/f_auto,q_auto,w_1280/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4"
 
 def get_image_base64(path: str) -> str:
     if os.path.exists(path):
@@ -143,21 +143,34 @@ st.markdown("""
         border-radius: 0 0 40px 40px;
         overflow: hidden;
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        background:
+            radial-gradient(circle at top center, rgba(168,213,213,0.12), transparent 45%),
+            linear-gradient(180deg, #071014 0%, #000000 100%);
     }
+
     .hero-video {
         position: absolute;
         inset: 0;
-        width: 100%; height: 100%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        opacity: 0.25;
+        opacity: 0.38;
         z-index: 0;
+        filter: contrast(1.1) brightness(1.15);
     }
+
     .hero-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, #000000 100%);
+        background: linear-gradient(
+            180deg,
+            rgba(0,0,0,0.10) 0%,
+            rgba(0,0,0,0.35) 55%,
+            rgba(0,0,0,0.75) 100%
+        );
         z-index: 1;
     }
+
     .hero-content {
         position: relative;
         z-index: 2;
@@ -311,7 +324,7 @@ st.markdown("""
 # =========================
 st.markdown(f"""
 <div class="hero-container">
-    <video autoplay muted loop playsinline class="hero-video">
+    <video autoplay muted loop playsinline preload="auto" class="hero-video">
         <source src="{CLOUDINARY_VIDEO_URL}" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
