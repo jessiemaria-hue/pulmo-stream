@@ -11,7 +11,7 @@ import io
 # =========================
 st.set_page_config(
     layout="wide",
-    page_title="Neuronix AI | Clinical Excellence",
+    page_title="Neuronix AI",
     page_icon="🧠",
     initial_sidebar_state="collapsed"
 )
@@ -349,8 +349,23 @@ with col_b:
     <div class="glass-card">
         <div class="section-label">02. THE CHALLENGE</div>
         <h3 class="card-title">Why PE?</h3>
+
         <p class="body-text">
-            Radiologists face high fatigue when screening hundreds of CTPA slices. Missing a small clot can be fatal. Neuronix AI acts as a <b style="color: #A8D5D5;">vigilant second pair of eyes.</b>
+            Pulmonary embolism happens when a blood clot blocks blood flow in the lungs.
+            It can be dangerous because small clots are difficult to detect on CTPA scans.
+        </p>
+
+        <p class="body-text" style="margin-top: 18px;">
+            <b style="color: #A8D5D5;">Key Points</b><br>
+            • High-risk and time-sensitive condition<br>
+            • Small clots can be easily missed<br>
+            • Radiologists review hundreds of scan slices<br>
+            • Delayed detection can delay treatment
+        </p>
+
+        <p class="body-text" style="margin-top: 18px;">
+            <b style="color: #A8D5D5;">Neuronix AI Support</b><br>
+            Neuronix AI helps detect suspicious PE areas on CTPA scans, making the review process faster, clearer, and more consistent.
         </p>
     </div>
     """, unsafe_allow_html=True)
