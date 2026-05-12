@@ -365,26 +365,26 @@ with col_b:
     st.markdown(challenge_html, unsafe_allow_html=True)
 
 with col_c:
-    st.markdown("""
-    <div class="glass-card">
-        <div class="section-label">03. THE BENCHMARK</div>
-        <h3 class="card-title" style="margin-bottom: 1.5rem;">Performance</h3>
+    benchmark_html = (
+        '<div class="glass-card">'
+            '<div class="section-label">03. THE BENCHMARK</div>'
+            '<h3 class="card-title" style="margin-bottom:1.5rem;">Performance</h3>'
 
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-            <div class="metric-item" style="width: 100%;">
-                <div class="metric-value">95.8<span style="font-size: 1.4rem;">%</span></div>
-                <div class="metric-label">Sensitivity</div>
-            </div>
+            '<div style="display:flex; flex-direction:column; gap:14px;">'
+                '<div class="metric-item" style="width:100%; box-sizing:border-box;">'
+                    '<div class="metric-value">95.8<span style="font-size:1.4rem;">%</span></div>'
+                    '<div class="metric-label">Sensitivity</div>'
+                '</div>'
 
-            <div class="metric-item" style="width: 100%;">
-                <div class="metric-value">98.2<span style="font-size: 1.4rem;">%</span></div>
-                <div class="metric-label">Specificity</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-st.markdown("<br><br><br>", unsafe_allow_html=True)
+                '<div class="metric-item" style="width:100%; box-sizing:border-box;">'
+                    '<div class="metric-value">98.2<span style="font-size:1.4rem;">%</span></div>'
+                    '<div class="metric-label">Specificity</div>'
+                '</div>'
+            '</div>'
+        '</div>'
+    )
+
+    st.markdown(benchmark_html, unsafe_allow_html=True)
 
 # =========================
 # 6. INFERENCE WORKSPACE (THE LOGIC ZONE)
