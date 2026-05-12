@@ -44,7 +44,7 @@ except Exception as e:
 # =========================
 # 2. ASSETS & HELPERS
 # =========================
-CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/f_auto,q_auto,w_1280/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4"
+CLOUDINARY_VIDEO_URL = "https://res.cloudinary.com/dkxoksnpz/video/upload/f_mp4,vc_h264,q_auto:low,w_1280/v1774362450/3130284-uhd_3840_2160_30fps_mzryjc.mp4"
 
 def get_image_base64(path: str) -> str:
     if os.path.exists(path):
@@ -157,6 +157,8 @@ st.markdown("""
         opacity: 0.38;
         z-index: 0;
         filter: contrast(1.1) brightness(1.15);
+        pointer-events: none;
+
     }
 
     .hero-overlay {
@@ -324,7 +326,16 @@ st.markdown("""
 # =========================
 st.markdown(f"""
 <div class="hero-container">
-    <video autoplay muted loop playsinline preload="auto" class="hero-video">
+    <video 
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        controlslist="nodownload nofullscreen noremoteplayback"
+    >
         <source src="{CLOUDINARY_VIDEO_URL}" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
