@@ -355,16 +355,6 @@ with col_b:
                 'It is dangerous because small clots can be difficult to detect on CTPA scans.'
             '</p>'
 
-            '<div class="body-text" style="margin-top:18px;">'
-                '<b style="color:#A8D5D5;">Key Points</b>'
-                '<ul style="padding-left:20px; margin-top:8px;">'
-                    '<li>High-risk and time-sensitive condition</li>'
-                    '<li>Small clots can be easily missed</li>'
-                    '<li>Radiologists review hundreds of scan slices</li>'
-                    '<li>Delayed detection can delay treatment</li>'
-                '</ul>'
-            '</div>'
-
             '<p class="body-text" style="margin-top:18px;">'
                 '<b style="color:#A8D5D5;">Neuronix AI Support</b><br>'
                 'Neuronix AI helps detect suspicious PE areas on CTPA scans, '
