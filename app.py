@@ -2058,7 +2058,11 @@ _main_style = r"""
 
         [data-testid="stFileUploader"] small,
 
+
+
         [data-testid="stFileUploader"] p{
+
+
 
             color:#405155 !important;
 
@@ -2066,9 +2070,42 @@ _main_style = r"""
 
         }
 
-        [data-testid="stFileUploader"] span,
+
+
+        /* Keep uploader button label/icon white */
+
+
+
+        [data-testid="stFileUploader"] button,
+
+
+
+        [data-testid="stFileUploader"] button *,
+
+
+
+        [data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"],
+
+
+
+        [data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] *{
+
+
 
             color:#FFFFFF !important;
+
+
+
+            fill:#FFFFFF !important;
+
+
+
+            stroke:#FFFFFF !important;
+
+
+
+        }
+
 
 
         .mini-feature-row{
