@@ -7049,6 +7049,35 @@ button, input, textarea, select,
     letter-spacing:0 !important;
 }
 
+
+/* ===== STREAMLIT CLOUD UPLOADER BUTTON FIX ===== */
+[data-testid="stFileUploader"] button,
+[data-testid="stFileUploaderDropzone"] button,
+[data-testid="stBaseButton-secondary"]{
+    background:#FFFFFF !important;
+    color:#2F5650 !important;
+    border:1px solid #9DBBB3 !important;
+    border-radius:10px !important;
+    box-shadow:none !important;
+    font-family:'Source Sans 3',Arial,sans-serif !important;
+    font-weight:600 !important;
+}
+
+[data-testid="stFileUploader"] button:hover,
+[data-testid="stFileUploaderDropzone"] button:hover,
+[data-testid="stBaseButton-secondary"]:hover{
+    background:#F2F7F5 !important;
+    color:#244A44 !important;
+    border-color:#739D92 !important;
+}
+
+[data-testid="stFileUploader"] button *,
+[data-testid="stFileUploaderDropzone"] button *,
+[data-testid="stBaseButton-secondary"] *{
+    color:inherit !important;
+    fill:currentColor !important;
+}
+
 </style>
 
 
