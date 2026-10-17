@@ -7071,9 +7071,11 @@ button, input, textarea, select,
 }
 
 
-/* ===== ONLY FIX: uploader text stays white ===== */
+/* ===== ONLY CHANGE: upload / filename / filesize text white ===== */
 
-/* Before upload: green upload/browse button */
+/* Before upload: button label + icon */
+[data-testid="stFileUploader"] button,
+[data-testid="stFileUploader"] button *,
 [data-testid="stFileUploaderDropzone"] button,
 [data-testid="stFileUploaderDropzone"] button *,
 [data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"],
@@ -7081,20 +7083,17 @@ button, input, textarea, select,
     color:#FFFFFF !important;
     -webkit-text-fill-color:#FFFFFF !important;
 }
-[data-testid="stFileUploaderDropzone"] button svg,
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] svg{
-    fill:#FFFFFF !important;
-    stroke:#FFFFFF !important;
-}
 
-/* After upload: filename + filesize row.
-   Multiple selectors are included because Streamlit Cloud DOM can differ by version. */
+/* After upload: selected filename + filesize */
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFile"],
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFile"] *,
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFileName"],
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFileName"] *,
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFileSize"],
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFileSize"] *,
+[data-testid="stFileUploader"] [class*="uploadedFile"],
 [data-testid="stFileUploader"] [class*="uploadedFile"] *,
+[data-testid="stFileUploader"] [class*="UploadedFile"],
 [data-testid="stFileUploader"] [class*="UploadedFile"] *,
 [data-testid="stFileUploader"] [class*="fileName"],
 [data-testid="stFileUploader"] [class*="fileName"] *,
@@ -7104,7 +7103,8 @@ button, input, textarea, select,
     -webkit-text-fill-color:#FFFFFF !important;
 }
 
-/* Uploaded-file row icons */
+/* Icons in uploader/file chip */
+[data-testid="stFileUploader"] button svg,
 [data-testid="stFileUploader"] [data-testid="stFileUploaderFile"] svg,
 [data-testid="stFileUploader"] [class*="uploadedFile"] svg,
 [data-testid="stFileUploader"] [class*="UploadedFile"] svg{
