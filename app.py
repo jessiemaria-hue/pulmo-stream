@@ -2060,47 +2060,15 @@ _main_style = r"""
 
 
 
+        [data-testid="stFileUploader"] span,
+
+
+
         [data-testid="stFileUploader"] p{
 
 
 
             color:#405155 !important;
-
-
-
-        }
-
-
-
-        /* Keep uploader button label/icon white */
-
-
-
-        [data-testid="stFileUploader"] button,
-
-
-
-        [data-testid="stFileUploader"] button *,
-
-
-
-        [data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"],
-
-
-
-        [data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] *{
-
-
-
-            color:#FFFFFF !important;
-
-
-
-            fill:#FFFFFF !important;
-
-
-
-            stroke:#FFFFFF !important;
 
 
 
@@ -7082,22 +7050,22 @@ button, input, textarea, select,
 }
 
 
-/* ===== ABSOLUTE FINAL: UPLOAD BUTTON LABEL WHITE ===== */
-[data-testid="stFileUploader"] button,
-[data-testid="stFileUploader"] button p,
-[data-testid="stFileUploader"] button span,
-[data-testid="stFileUploader"] button div,
-[data-testid="stFileUploader"] button svg,
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"],
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] p,
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] span,
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] div{
+/* ===== FINAL SMALL FIX: selected uploaded file text ===== */
+[data-testid="stFileUploaderFile"],
+[data-testid="stFileUploaderFile"] *,
+[data-testid="stFileUploader"] ul li,
+[data-testid="stFileUploader"] ul li *,
+[data-testid="stFileUploader"] [data-testid*="FileName"],
+[data-testid="stFileUploader"] [data-testid*="FileName"] *,
+[data-testid="stFileUploader"] [data-testid*="FileData"],
+[data-testid="stFileUploader"] [data-testid*="FileData"] *{
     color:#FFFFFF !important;
     -webkit-text-fill-color:#FFFFFF !important;
 }
 
-[data-testid="stFileUploader"] button svg,
-[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] svg{
+[data-testid="stFileUploaderFile"] svg,
+[data-testid="stFileUploader"] ul li svg{
+    color:#FFFFFF !important;
     fill:#FFFFFF !important;
     stroke:#FFFFFF !important;
 }
@@ -7563,81 +7531,6 @@ raw_preview_uri = pil_to_data_uri(raw_image)
 gt_preview_uri = pil_to_data_uri(gt_image)
 y11_preview_uri = pil_to_data_uri(image11)
 y26_preview_uri = pil_to_data_uri(image26)
-
-render_html(
-    f"""
-    <section class="actual-review">
-        <div class="actual-review-head">
-            <div>
-                <div class="actual-kicker">Case preview</div>
-                <div class="actual-title">Four aligned views</div>
-            </div>
-            <div class="actual-note">Same CTPA slice · direct comparison</div>
-        </div>
-
-        <div class="actual-flow">
-            <div class="actual-card">
-                <div class="actual-thumb">
-                    <img src="{raw_preview_uri}" alt="Original CTPA">
-                </div>
-                <div class="actual-meta">
-                    <span class="actual-num">01</span>
-                    <div>
-                        <b>Original CTPA</b>
-                        <small>Uploaded source image</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actual-arrow">›</div>
-
-            <div class="actual-card actual-gt">
-                <div class="actual-thumb">
-                    <img src="{gt_preview_uri}" alt="Radiologist ground truth">
-                </div>
-                <div class="actual-meta">
-                    <span class="actual-num">02</span>
-                    <div>
-                        <b>Radiologist GT</b>
-                        <small>Mask parsed from the matching label file</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actual-arrow">›</div>
-
-            <div class="actual-card actual-y11">
-                <div class="actual-thumb">
-                    <img src="{y11_preview_uri}" alt="YOLOv11 segmentation">
-                </div>
-                <div class="actual-meta">
-                    <span class="actual-num">03</span>
-                    <div>
-                        <b>YOLOv11</b>
-                        <small>Predicted segmentation</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actual-arrow">›</div>
-
-            <div class="actual-card actual-y26">
-                <div class="actual-thumb">
-                    <img src="{y26_preview_uri}" alt="YOLOv26 segmentation">
-                </div>
-                <div class="actual-meta">
-                    <span class="actual-num">04</span>
-                    <div>
-                        <b>YOLOv26</b>
-                        <small>Predicted segmentation</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    """,
-    unsafe_allow_html=True,
-)
 
 # =========================================================
 # 11. MAIN BENCHMARK ROW
