@@ -7071,73 +7071,46 @@ button, input, textarea, select,
 }
 
 
-/* ===== FINAL ROBUST UPLOADER FIX ===== */
+/* ===== ONLY CHANGE: upload / filename / filesize text white ===== */
 
-/* Keep upload/browse button text/icon white */
+/* Before upload: button label + icon */
 [data-testid="stFileUploader"] button,
-[data-testid="stFileUploader"] button *{
+[data-testid="stFileUploader"] button *,
+[data-testid="stFileUploaderDropzone"] button,
+[data-testid="stFileUploaderDropzone"] button *,
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"],
+[data-testid="stFileUploader"] [data-testid="stBaseButton-secondary"] *{
     color:#FFFFFF !important;
     -webkit-text-fill-color:#FFFFFF !important;
 }
-[data-testid="stFileUploader"] button svg{
+
+/* After upload: selected filename + filesize */
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFile"],
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFile"] *,
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFileName"],
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFileName"] *,
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFileSize"],
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFileSize"] *,
+[data-testid="stFileUploader"] [class*="uploadedFile"],
+[data-testid="stFileUploader"] [class*="uploadedFile"] *,
+[data-testid="stFileUploader"] [class*="UploadedFile"],
+[data-testid="stFileUploader"] [class*="UploadedFile"] *,
+[data-testid="stFileUploader"] [class*="fileName"],
+[data-testid="stFileUploader"] [class*="fileName"] *,
+[data-testid="stFileUploader"] [class*="FileName"],
+[data-testid="stFileUploader"] [class*="FileName"] *{
+    color:#FFFFFF !important;
+    -webkit-text-fill-color:#FFFFFF !important;
+}
+
+/* Icons in uploader/file chip */
+[data-testid="stFileUploader"] button svg,
+[data-testid="stFileUploader"] [data-testid="stFileUploaderFile"] svg,
+[data-testid="stFileUploader"] [class*="uploadedFile"] svg,
+[data-testid="stFileUploader"] [class*="UploadedFile"] svg{
+    color:#FFFFFF !important;
     fill:#FFFFFF !important;
     stroke:#FFFFFF !important;
-}
-
-/* Once a file is selected, Streamlit renders a separate native file row.
-   Hide only that native row; keep the uploader/dropzone itself untouched. */
-[data-testid="stFileUploader"] section ~ *{
-    display:none !important;
-}
-
-/* Our replacement selected-file chip */
-.custom-upload-chip{
-    width:max-content;
-    max-width:min(520px,92%);
-    margin:.55rem auto 0;
-    display:flex;
-    align-items:center;
-    gap:.62rem;
-    padding:.62rem .78rem;
-    border-radius:12px;
-    background:#11191B;
-    border:1px solid #1E2B2D;
-    box-shadow:none;
-}
-.custom-upload-chip .file-icon{
-    width:28px;
-    height:28px;
-    border-radius:7px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#F7FAF9;
-    color:#2B4441;
-    font-size:.72rem;
-    font-weight:800;
-    flex:0 0 28px;
-}
-.custom-upload-chip .file-copy{
-    min-width:0;
-}
-.custom-upload-chip .file-name{
-    color:#FFFFFF !important;
-    -webkit-text-fill-color:#FFFFFF !important;
-    font-size:.74rem;
-    font-weight:650;
-    line-height:1.15;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width:360px;
-}
-.custom-upload-chip .file-size{
-    margin-top:.14rem;
-    color:#FFFFFF !important;
-    -webkit-text-fill-color:#FFFFFF !important;
-    opacity:.72;
-    font-size:.62rem;
-    line-height:1;
 }
 
 </style>
@@ -7513,22 +7486,6 @@ uploaded = st.file_uploader(
     type=["png", "jpg", "jpeg"],
     label_visibility="collapsed",
 )
-
-if uploaded is not None:
-    _size_kb = uploaded.size / 1024
-    _size_text = f"{_size_kb:.1f}KB" if _size_kb < 1024 else f"{_size_kb/1024:.2f}MB"
-    render_html(
-        f"""
-        <div class="custom-upload-chip">
-            <div class="file-icon">▣</div>
-            <div class="file-copy">
-                <div class="file-name">{uploaded.name}</div>
-                <div class="file-size">{_size_text}</div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 # =========================================================
 # 7. WAIT FOR INPUT
 # =========================================================
