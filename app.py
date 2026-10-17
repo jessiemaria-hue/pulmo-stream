@@ -2058,15 +2058,7 @@ _main_style = r"""
 
         [data-testid="stFileUploader"] small,
 
-
-
-        [data-testid="stFileUploader"] span,
-
-
-
         [data-testid="stFileUploader"] p{
-
-
 
             color:#405155 !important;
 
@@ -2074,6 +2066,9 @@ _main_style = r"""
 
         }
 
+        [data-testid="stFileUploader"] span,
+
+            color:#FFFFFF !important;
 
 
         .mini-feature-row{
