@@ -7486,6 +7486,19 @@ uploaded = st.file_uploader(
     type=["png", "jpg", "jpeg"],
     label_visibility="collapsed",
 )
+# Confidence control for both models. Defaults to Ultralytics prediction setting.
+st.markdown("**Confidence Threshold**")
+confidence_threshold = st.slider(
+    "Minimum prediction confidence (YOLOv11 and YOLOv26)",
+    min_value=0.001,
+    max_value=1.000,
+    value=0.250,
+    step=0.001,
+    format="%.3f",
+    help="0.250 = 25% (prediction default); 0.001 = 0.1% (more low-confidence predictions).",
+)
+st.caption(f"Current threshold: **{confidence_threshold * 100:.1f}%** · Applies to both models; the predictions are rerun when changed.")
+
 # =========================================================
 # 7. WAIT FOR INPUT
 # =========================================================
@@ -7513,7 +7526,7 @@ else:
 result11 = model11.predict(
     raw_image,
     imgsz=512,
-    conf=0.25,
+    conf=confidence_threshold,
     iou=0.7,
     retina_masks=True,
     verbose=False,
@@ -7534,7 +7547,7 @@ iou11 = calculate_iou(gt_mask, mask11) if gt_mask is not None else None
 result26 = model26.predict(
     raw_image,
     imgsz=512,
-    conf=0.25,
+    conf=confidence_threshold,
     iou=0.7,
     retina_masks=True,
     verbose=False,
