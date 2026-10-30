@@ -7486,18 +7486,42 @@ uploaded = st.file_uploader(
     type=["png", "jpg", "jpeg"],
     label_visibility="collapsed",
 )
-# Confidence control for both models. Defaults to Ultralytics prediction setting.
-st.markdown("**Confidence Threshold**")
-confidence_threshold = st.slider(
-    "Minimum prediction confidence (YOLOv11 and YOLOv26)",
-    min_value=0.001,
-    max_value=1.000,
-    value=0.250,
-    step=0.001,
-    format="%.3f",
-    help="0.250 = 25% (prediction default); 0.001 = 0.1% (more low-confidence predictions).",
+# One shared confidence control for both models, displayed in percent.
+# Keep the model input on the 0–1 scale used by Ultralytics.
+st.markdown("""
+<style>
+/* Confidence control — matches PulmoLens' clinical palette */
+[data-testid="stSlider"] {
+    background: #F8FBFA;
+    border: 1px solid #E1EAE7;
+    border-radius: 15px;
+    padding: 14px 18px 9px;
+    margin: 4px 0 5px;
+}
+[data-testid="stSlider"] [data-baseweb="slider"] { padding-top: 5px; }
+[data-testid="stSlider"] [role="slider"] { box-shadow: 0 0 0 4px rgba(77, 152, 129, .13); }
+[data-testid="stSlider"] [data-testid="stWidgetLabel"] { color: #536865; font-weight: 700; }
+</style>
+<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 5px;">
+  <div>
+    <div style="font-weight:800; font-size:1rem; color:#263D39;">Confidence threshold</div>
+    <div style="font-size:.82rem; color:#758783; margin-top:2px;">Geser untuk mengatur batas confidence kedua model.</div>
+  </div>
+  <div style="border:1px solid #D7E8E0; background:#EAF5F0; border-radius:999px; padding:7px 12px; color:#2E6A61; font-size:.76rem; font-weight:800; white-space:nowrap;">Default 25%</div>
+</div>
+""", unsafe_allow_html=True)
+confidence_percent = st.slider(
+    "Confidence minimum (%)",
+    min_value=0.1,
+    max_value=100.0,
+    value=25.0,
+    step=0.1,
+    format="%.1f%%",
+    help="25% = threshold prediction standar. Lebih rendah: lebih banyak deteksi, termasuk yang kurang yakin.",
+    key="pulmolens_confidence_percent",
 )
-st.caption(f"Current threshold: **{confidence_threshold * 100:.1f}%** · Applies to both models; the predictions are rerun when changed.")
+confidence_threshold = confidence_percent / 100.0
+st.caption(f"Batas saat ini: **{confidence_percent:.1f}%** · Dipakai oleh YOLOv11 dan YOLOv26.")
 
 # =========================================================
 # 7. WAIT FOR INPUT
