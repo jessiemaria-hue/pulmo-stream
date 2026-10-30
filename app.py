@@ -7503,20 +7503,10 @@ st.markdown("""
     font-weight: 700;
 }
 [data-testid="stSlider"] [data-baseweb="slider"] { padding-top: 6px; }
-/* The thumb, active rail and value tooltip use the same brand green. */
-[data-testid="stSlider"] [role="slider"] {
-    background-color: #2E6A61 !important;
-    border-color: #2E6A61 !important;
-    box-shadow: 0 0 0 4px rgba(46,106,97,.14) !important;
-}
-[data-testid="stSlider"] [data-baseweb="slider"] > div > div:nth-child(2),
-[data-testid="stSlider"] [data-baseweb="slider"] > div > div:nth-child(2) > div,
-[data-testid="stSlider"] [data-baseweb="slider"] [aria-valuenow] {
-    background-color: #2E6A61 !important;
-}
-[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stSliderThumbValue"],
-[data-testid="stSlider"] [data-baseweb="tooltip"] {
-    color: #2E6A61 !important;
+/* Streamlit draws the active track, thumb and value using theme.primaryColor.
+   Set in .streamlit/config.toml to keep them consistent across versions. */
+[data-testid="stSlider"] [role="slider"]:focus-visible {
+    outline-color: #2E6A61 !important;
 }
 </style>
 <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 6px;">
