@@ -7487,41 +7487,58 @@ uploaded = st.file_uploader(
     label_visibility="collapsed",
 )
 # One shared confidence control for both models, displayed in percent.
-# Keep the model input on the 0–1 scale used by Ultralytics.
+# The UI shows percentages; Ultralytics receives a value between 0 and 1.
 st.markdown("""
 <style>
-/* Confidence control — matches PulmoLens' clinical palette */
+/* PulmoLens confidence slider — deep clinical green */
 [data-testid="stSlider"] {
     background: #F8FBFA;
-    border: 1px solid #E1EAE7;
-    border-radius: 15px;
-    padding: 14px 18px 9px;
-    margin: 4px 0 5px;
+    border: 1px solid #DCE8E3;
+    border-radius: 16px;
+    padding: 15px 18px 10px;
+    margin: 5px 0 7px;
 }
-[data-testid="stSlider"] [data-baseweb="slider"] { padding-top: 5px; }
-[data-testid="stSlider"] [role="slider"] { box-shadow: 0 0 0 4px rgba(77, 152, 129, .13); }
-[data-testid="stSlider"] [data-testid="stWidgetLabel"] { color: #536865; font-weight: 700; }
+[data-testid="stSlider"] [data-testid="stWidgetLabel"] {
+    color: #2E524A !important;
+    font-weight: 700;
+}
+[data-testid="stSlider"] [data-baseweb="slider"] { padding-top: 6px; }
+/* The thumb, active rail and value tooltip use the same brand green. */
+[data-testid="stSlider"] [role="slider"] {
+    background-color: #2E6A61 !important;
+    border-color: #2E6A61 !important;
+    box-shadow: 0 0 0 4px rgba(46,106,97,.14) !important;
+}
+[data-testid="stSlider"] [data-baseweb="slider"] > div > div:nth-child(2),
+[data-testid="stSlider"] [data-baseweb="slider"] > div > div:nth-child(2) > div,
+[data-testid="stSlider"] [data-baseweb="slider"] [aria-valuenow] {
+    background-color: #2E6A61 !important;
+}
+[data-testid="stSlider"] [data-baseweb="slider"] [data-testid="stSliderThumbValue"],
+[data-testid="stSlider"] [data-baseweb="tooltip"] {
+    color: #2E6A61 !important;
+}
 </style>
-<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 5px;">
+<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 6px;">
   <div>
-    <div style="font-weight:800; font-size:1rem; color:#263D39;">Confidence threshold</div>
-    <div style="font-size:.82rem; color:#758783; margin-top:2px;">Geser untuk mengatur batas confidence kedua model.</div>
+    <div style="font-weight:800; font-size:1rem; color:#263D39;">Confidence Threshold</div>
+    <div style="font-size:.82rem; color:#758783; margin-top:3px;">Adjust the minimum confidence for both models.</div>
   </div>
   <div style="border:1px solid #D7E8E0; background:#EAF5F0; border-radius:999px; padding:7px 12px; color:#2E6A61; font-size:.76rem; font-weight:800; white-space:nowrap;">Default 25%</div>
 </div>
 """, unsafe_allow_html=True)
 confidence_percent = st.slider(
-    "Confidence minimum (%)",
+    "Minimum confidence (%)",
     min_value=0.1,
     max_value=100.0,
     value=25.0,
     step=0.1,
     format="%.1f%%",
-    help="25% = threshold prediction standar. Lebih rendah: lebih banyak deteksi, termasuk yang kurang yakin.",
+    help="Lower values show more predictions, including less confident ones. Higher values keep only more confident predictions.",
     key="pulmolens_confidence_percent",
 )
 confidence_threshold = confidence_percent / 100.0
-st.caption(f"Batas saat ini: **{confidence_percent:.1f}%** · Dipakai oleh YOLOv11 dan YOLOv26.")
+st.caption(f"Current threshold: **{confidence_percent:.1f}%** · Applies to YOLOv11 and YOLOv26.")
 
 # =========================================================
 # 7. WAIT FOR INPUT
