@@ -7506,7 +7506,7 @@ if label_path is not None:
     )
 else:
     gt_mask = None
-    gt_image = raw_image.copy()
+    gt_image = None
 # =========================================================
 # 9. YOLOv11
 # =========================================================
@@ -7555,9 +7555,7 @@ mask_stats = {
     "YOLOv11": int(np.count_nonzero(mask11)),
     "YOLOv26": int(np.count_nonzero(mask26)),
 }
-if label_path is None:
-    st.warning(f"GT label .txt not found for '{uploaded.name}'. Expected in: {LABEL_DIR}")
-elif mask_stats["Ground Truth"] == 0:
+if label_path is not None and mask_stats["Ground Truth"] == 0:
     st.warning(f"GT label found ({label_path.name}), but no polygon pixels were parsed. Check label format/class and whether this slice is negative.")
 for name in ("YOLOv11", "YOLOv26"):
     if mask_stats[name] == 0:
@@ -7571,7 +7569,7 @@ if SHOW_DEBUG:
         st.write("GT label:", str(label_path) if label_path else "Not found")
 
 raw_preview_uri = pil_to_data_uri(raw_image)
-gt_preview_uri = pil_to_data_uri(gt_image)
+gt_preview_uri = pil_to_data_uri(gt_image) if gt_image is not None else None
 y11_preview_uri = pil_to_data_uri(image11)
 y26_preview_uri = pil_to_data_uri(image26)
 
@@ -7590,32 +7588,49 @@ render_html(
     unsafe_allow_html=True,
 )
 render_html('<div class="benchmark-shell scroll-reveal scroll-reveal-delay-2">', unsafe_allow_html=True)
-raw_col, gt_col, y11_col, y26_col, info_col = st.columns(
-    [1, 1, 1, 1, 0.9],
-    gap="small",
-)
+has_gt = label_path is not None
+if has_gt:
+    raw_col, gt_col, y11_col, y26_col, info_col = st.columns(
+        [1, 1, 1, 1, 0.9], gap="small"
+    )
+else:
+    raw_col, y11_col, y26_col, info_col = st.columns(
+        [1, 1, 1, 0.9], gap="small"
+    )
+
 with raw_col:
     render_html('<div class="stagger-1"><div class="image-label"><span class="dot dot-raw"></span>Raw Image</div></div>', unsafe_allow_html=True)
     st.image(raw_image, use_column_width=True)
-with gt_col:
-    render_html('<div class="stagger-2"><div class="image-label"><span class="dot dot-gt"></span>GT Mask</div></div>', unsafe_allow_html=True)
-    st.image(gt_image, use_column_width=True)
+if has_gt:
+    with gt_col:
+        render_html('<div class="stagger-2"><div class="image-label"><span class="dot dot-gt"></span>GT Mask</div></div>', unsafe_allow_html=True)
+        st.image(gt_image, use_column_width=True)
 with y11_col:
     render_html('<div class="stagger-3"><div class="image-label"><span class="dot dot-11"></span>YOLOv11</div></div>', unsafe_allow_html=True)
     st.image(image11, use_column_width=True)
 with y26_col:
     render_html('<div class="stagger-4"><div class="image-label"><span class="dot dot-26"></span>YOLOv26</div></div>', unsafe_allow_html=True)
     st.image(image26, use_column_width=True)
+# IoU must only appear when a matching GT label exists.
+iou_metric_11 = (
+    '<div class="mini-metric"><div class="mini-value">'
+    + (f"{iou11:.3f}" if iou11 is not None else "N/A")
+    + '</div><div class="mini-label">IoU</div></div>'
+) if has_gt else ""
+iou_metric_26 = (
+    '<div class="mini-metric"><div class="mini-value">'
+    + (f"{iou26:.3f}" if iou26 is not None else "N/A")
+    + '</div><div class="mini-label">IoU</div></div>'
+) if has_gt else ""
+
+gt_legend = ('<div class="legend-item"><span class="legend-dot" style="background:#62D48A"></span>Ground Truth</div>' if has_gt else "")
 with info_col:
     render_html(
         f"""
         <div class="info-card slide-right">
             <div class="model-head"><div class="model-badge">YOLOv11</div><div class="model-status">Segmentation</div></div>
             <div class="mini-grid">
-                <div class="mini-metric">
-                    <div class="mini-value">{f"{iou11:.3f}" if iou11 is not None else "N/A"}</div>
-                    <div class="mini-label">IoU</div>
-                </div>
+                {iou_metric_11}
                 <div class="mini-metric">
                     <div class="mini-value">{f"{conf11*100:.1f}%" if conf11 is not None else "N/A"}</div>
                     <div class="mini-label">Confidence</div>
@@ -7634,10 +7649,7 @@ with info_col:
         <div class="info-card slide-right">
             <div class="model-head"><div class="model-badge">YOLOv26</div><div class="model-status">Segmentation</div></div>
             <div class="mini-grid">
-                <div class="mini-metric">
-                    <div class="mini-value">{f"{iou26:.3f}" if iou26 is not None else "N/A"}</div>
-                    <div class="mini-label">IoU</div>
-                </div>
+                {iou_metric_26}
                 <div class="mini-metric">
                     <div class="mini-value">{f"{conf26*100:.1f}%" if conf26 is not None else "N/A"}</div>
                     <div class="mini-label">Confidence</div>
@@ -7652,9 +7664,9 @@ with info_col:
         unsafe_allow_html=True,
     )
     render_html(
-        """
+        f"""
 
-<div class="legend-card"> <div class="legend-item"><span class="legend-dot" style="background:#62D48A"></span>Ground Truth</div> <div class="legend-item"><span class="legend-dot" style="background:#E96666"></span>YOLOv11</div> <div class="legend-item"><span class="legend-dot" style="background:#55CBDC"></span>YOLOv26</div> <div class="legend-item"><span class="legend-dot" style="background:#BBC4CA"></span>Raw CTPA</div> </div>
+<div class="legend-card"> {gt_legend} <div class="legend-item"><span class="legend-dot" style="background:#E96666"></span>YOLOv11</div> <div class="legend-item"><span class="legend-dot" style="background:#55CBDC"></span>YOLOv26</div> <div class="legend-item"><span class="legend-dot" style="background:#BBC4CA"></span>Raw CTPA</div> </div>
 
 
 
@@ -7662,10 +7674,11 @@ with info_col:
         unsafe_allow_html=True,
     )
 render_html('</div>', unsafe_allow_html=True)
+iou_explanation = ('<div class="explain-item"><b>IoU</b><span>How closely the predicted mask overlaps with the radiologist annotation.</span></div>' if has_gt else "")
 render_html(
-    """
+    f"""
 
-<div class="explain-strip scroll-reveal scroll-reveal-delay-3"> <div class="explain-item"> <b>IoU</b> <span>How closely the predicted mask overlaps with the radiologist annotation.</span> </div> <div class="explain-item"> <b>Confidence</b> <span>The model’s confidence score for the detected region.</span> </div> </div>
+<div class="explain-strip scroll-reveal scroll-reveal-delay-3"> {iou_explanation} <div class="explain-item"> <b>Confidence</b> <span>The model’s confidence score for the detected region.</span> </div> </div>
 
 
 
