@@ -7527,6 +7527,51 @@ st.markdown("""
   <div style="border:1px solid #D7E8E0; background:#EAF5F0; border-radius:999px; padding:7px 12px; color:#2E6A61; font-size:.76rem; font-weight:800; white-space:nowrap;">Default 25%</div>
 </div>
 """, unsafe_allow_html=True)
+# Final slider color override: Streamlit/BaseWeb versions have different track markup.
+# Keep the existing PulmoLens card styling while targeting actual slider internals.
+st.markdown(r"""
+<style>
+:root, .stApp {
+    --primary-color: #2E6A61 !important;
+    --primary: #2E6A61 !important;
+}
+/* BaseWeb slider uses nested rails, the active segment and a thumb label. */
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"]::before,
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"]::after {
+    background: #2E6A61 !important;
+    border-color: #2E6A61 !important;
+}
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] > div,
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] > div > div {
+    color: #2E6A61 !important;
+}
+/* Selected segment: different Streamlit versions use an inline-colored rail. */
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] > div > div[style*="background"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] > div > div > div[style*="background"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] div[style*="rgb(255, 75, 75)"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] div[style*="#ff4b4b"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] div[style*="#FF4B4B"] {
+    background-color: #2E6A61 !important;
+}
+/* Fallback: selected rail normally precedes the thumb in BaseWeb. */
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] ~ div,
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"] + div {
+    color: #2E6A61 !important;
+}
+.stApp [data-testid="stSlider"] [data-testid="stThumbValue"],
+.stApp [data-testid="stSlider"] [data-testid="stSliderThumbValue"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"]::before,
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] [role="slider"]::after,
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] div[style*="color: rgb(255, 75, 75)"],
+.stApp [data-testid="stSlider"] [data-baseweb="slider"] div[style*="color: #ff4b4b"] {
+    color: #2E6A61 !important;
+}
+/* Browser accent styling for range-like controls, where supported. */
+.stApp [data-testid="stSlider"] { accent-color: #2E6A61 !important; }
+</style>
+""", unsafe_allow_html=True)
+
 confidence_percent = st.slider(
     "Minimum confidence (%)",
     min_value=0.1,
